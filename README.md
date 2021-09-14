@@ -7,7 +7,6 @@
   Apache Airflow Provider for Aliyun RocketMQ
 </h1>
   <h3 align="center">
-  Created from <a href="https://github.com/astronomer/airflow-provider-sample">Astronomer's template</a>
 </h3>
 
 <br/>
