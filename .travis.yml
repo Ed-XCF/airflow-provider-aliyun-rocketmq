@@ -3,14 +3,21 @@ language: python
 python:
   - "3.7"
   - "3.8"
+addons:
+  apt:
+    sources:
+      - travis-ci/sqlite3
+    packages:
+      - sqlite3
 branches:
   only:
     - main
 services: airflow-provider-aliyun-rocketmq
 cache: pip
 before_install:
-  - sudo apt-get update
-  - sudo apt-get install sqlite3
+  - sudo apt-add-repository -y ppa:travis-ci/sqlite3
+  - sudo apt-get -y update
+  - sudo apt-get -y install sqlite3
   - sqlite3 --version
 install: make dev
 script: make test
