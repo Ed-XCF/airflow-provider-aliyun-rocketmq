@@ -1,3 +1,4 @@
+dist: xenial
 language: python
 python:
   - "3.7"
@@ -8,9 +9,9 @@ branches:
 services: airflow-provider-aliyun-rocketmq
 cache: pip
 before_install:
-  - sqlite3 --version
   - sudo apt-get update
-  - sudo apt-get install sqlite3=3.27.2-3+deb10u1
+  - sudo apt-get install sqlite3
+  - sqlite3 --version
 install: make dev
 script: make test
 after_success:
