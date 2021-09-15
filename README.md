@@ -9,7 +9,10 @@
   <h3 align="center">
 </h3>
 
-<br/>
+![GitHub](https://img.shields.io/github/license/Ed-XCF/airflow-provider-aliyun-rocketmq)
+[![Build Status](https://travis-ci.org/Ed-XCF/airflow-provider-aliyun-rocketmq.svg?branch=master)](https://travis-ci.org/Ed-XCF/airflow-provider-aliyun-rocketmq)
+[![codecov](https://codecov.io/gh/Ed-XCF/airflow-provider-aliyun-rocketmq/branch/master/graph/badge.svg?token=J3HnAigB4J)](undefined)
+![PyPI](https://img.shields.io/pypi/v/airflow-provider-aliyun-rocketmq)
 
 ## 🧪 Experimental Version
-This provider is an experimental alpha containing necessary components to publish data to rocketmq.
+This provider is an experimental alpha containing necessary components to publish data to aliyun rocketmq.

@@ -1,122 +1,59 @@
-from typing import Any, Callable, Dict, Optional, Union
+import json
+from typing import Any, Dict
 
-import requests
-import tenacity
-from requests.auth import HTTPBasicAuth
+from mq_http_sdk.mq_client import MQClient, MQProducer
+from mq_http_sdk.mq_producer import TopicMessage
 
-from airflow.exceptions import AirflowException
 from airflow.hooks.base import BaseHook
 
 
 class AliyunRocketMQHook(BaseHook):
-    """
-    Sample Hook that interacts with an HTTP endpoint the Python requests library.
-
-    :param method: the API method to be called
-    :type method: str
-    :param sample_conn_id: connection that has the base API url i.e https://www.google.com/
-        and optional authentication credentials. Default headers can also be specified in
-        the Extra field in json format.
-    :type sample_conn_id: str
-    :param auth_type: The auth type for the service
-    :type auth_type: AuthBase of python requests lib
-    """
+    """Interact with Aliyun RocketMQ."""
 
     conn_name_attr = 'aliyun_rocketmq_conn_id'
     default_conn_name = 'aliyun_rocketmq_default'
     conn_type = 'aliyun_rocketmq'
     hook_name = 'AliyunRocketMQ'
 
+    @staticmethod
+    def get_ui_field_behaviour() -> Dict:
+        return {
+            "hidden_fields": ['port', 'extra'],
+            "relabeling": {
+                'login': 'RocketMQ Access ID',
+                'password': 'RocketMQ Access Key',
+                'schema': 'RocketMQ Instance ID'
+            },
+            "placeholders": {
+                'login': 'access id',
+                'password': 'access key',
+                'schema': 'instance_id'
+            },
+        }
+
     def __init__(
         self,
-        method: str = 'POST',
-        sample_conn_id: str = default_conn_name,
-        auth_type: Any = HTTPBasicAuth,
+        topic: str,
+        aliyun_rocketmq_conn_id: str = default_conn_name
     ) -> None:
         super().__init__()
-        self.sample_conn_id = sample_conn_id
-        self.method = method.upper()
-        self.base_url: str = ""
-        self.auth_type: Any = auth_type
+        self.topic = topic
+        self.aliyun_rocketmq_conn_id = aliyun_rocketmq_conn_id
 
-    def get_conn(self, headers: Optional[Dict[Any, Any]] = None) -> requests.Session:
-        """
-        Returns http session to use with requests.
+    def get_conn(self) -> MQProducer:
+        """Returns mq producer."""
+        conn = self.get_connection(self.aliyun_rocketmq_conn_id)
+        client = MQClient(conn.host, conn.login, conn.password)
+        return client.get_producer(conn.schema, self.topic)
 
-        :param headers: additional headers to be passed through as a dictionary
-        :type headers: dict
-        """
-        session = requests.Session()
-
-        if self.sample_conn_id:
-            conn = self.get_connection(self.sample_conn_id)
-
-            if conn.host and "://" in conn.host:
-                self.base_url = conn.host
-            else:
-                # schema defaults to HTTP
-                schema = conn.schema if conn.schema else "http"
-                host = conn.host if conn.host else ""
-                self.base_url = schema + "://" + host
-
-            if conn.port:
-                self.base_url = self.base_url + ":" + str(conn.port)
-            if conn.login:
-                session.auth = self.auth_type(conn.login, conn.password)
-            if conn.extra:
-                try:
-                    session.headers.update(conn.extra_dejson)
-                except TypeError:
-                    self.log.warning(
-                        'Connection to %s has invalid extra field.', conn.host)
-        if headers:
-            session.headers.update(headers)
-
-        return session
-
-    def run(
-        self,
-        endpoint: Optional[str] = None,
-        data: Optional[Union[Dict[str, Any], str]] = None,
-        headers: Optional[Dict[str, Any]] = None,
-        **request_kwargs: Any,
-    ) -> Any:
-        r"""
-        Performs the request
-
-        :param endpoint: the endpoint to be called i.e. resource/v1/query?
-        :type endpoint: str
-        :param data: payload to be uploaded or request parameters
-        :type data: dict
-        :param headers: additional headers to be passed through as a dictionary
-        :type headers: dict
-        """
-
-        session = self.get_conn(headers)
-
-        if self.base_url and not self.base_url.endswith('/') and endpoint and not endpoint.startswith('/'):
-            url = self.base_url + '/' + endpoint
-        else:
-            url = (self.base_url or '') + (endpoint or '')
-
-        if self.method == 'GET':
-            # GET uses params
-            req = requests.Request(
-                self.method, url, headers=headers)
-        else:
-            # Others use data
-            req = requests.Request(
-                self.method, url, data=data, headers=headers)
-
-        prepped_request = session.prepare_request(req)
-
-        self.log.info("Sending '%s' to url: %s", self.method, url)
-
+    def run(self, data: Dict, tag: str = None, fail_silently: bool = False) -> TopicMessage:
+        """Publish the data."""
         try:
-            response = session.send(prepped_request)
-            return response
+            conn = self.get_conn()
+            message = TopicMessage(json.dumps(data), (tag or "").lower())
+            return conn.publish_message(message)
+        except Exception as e:
+            if not fail_silently:
+                raise
 
-        except requests.exceptions.ConnectionError as ex:
-            self.log.warning(
-                '%s Tenacity will retry to execute the operation', ex)
-            raise ex
+            self.log.warning("Publish msg to {} failed: {}", self.topic, repr(e))
