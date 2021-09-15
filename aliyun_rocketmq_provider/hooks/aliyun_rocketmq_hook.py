@@ -1,5 +1,5 @@
 import json
-from typing import Any, Dict
+from typing import Dict
 
 from mq_http_sdk.mq_client import MQClient, MQProducer
 from mq_http_sdk.mq_producer import TopicMessage
