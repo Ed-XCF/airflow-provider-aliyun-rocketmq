@@ -1,3 +1,4 @@
+-r requirements.txt
 pytest
 coverage
 apache-airflow>=2.0
