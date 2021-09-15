@@ -9,7 +9,7 @@ services: airflow-provider-aliyun-rocketmq
 cache: pip
 before_install:
   - sudo apt-get update
-  - sudo apt-get install sqlite3=3.36.0
+  - sudo apt-get install sqlite3=3.27.2-3+deb10u1
 install: make dev
 script: make test
 after_success:
