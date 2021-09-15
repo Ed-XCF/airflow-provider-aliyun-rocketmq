@@ -7,6 +7,9 @@ branches:
     - main
 services: airflow-provider-aliyun-rocketmq
 cache: pip
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install sqlite3
 install: make dev
 script: make test
 after_success:
