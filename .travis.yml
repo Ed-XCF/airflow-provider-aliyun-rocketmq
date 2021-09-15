@@ -4,8 +4,8 @@ python:
   - "3.8"
 branches:
   only:
-    - master
-services: redis-server
+    - main
+services: airflow-provider-aliyun-rocketmq
 cache: pip
 install: make dev
 script: make test
