@@ -4,7 +4,7 @@ from mq_http_sdk.mq_client import MQClient
 from sqlalchemy.orm import Query
 from airflow.models.connection import Connection
 
-from aliyun_rocketmq_provider.hooks.aliyun_rocketmq_hook import AliyunRocketMQHook
+from aliyun_rocketmq.hooks.aliyun_rocketmq import AliyunRocketMQHook
 
 
 class TestAliyunRocketMQHook:
