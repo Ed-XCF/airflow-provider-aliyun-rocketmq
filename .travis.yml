@@ -6,7 +6,7 @@ python:
 branches:
   only:
     - main
-services: aliyun-rocketmq
+services: aliyun-rocketmq-provider
 cache: pip
 before_install:
   - sudo apt-get -y update
