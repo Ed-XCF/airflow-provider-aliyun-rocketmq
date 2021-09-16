@@ -9,10 +9,10 @@
   <h3 align="center">
 </h3>
 
-![GitHub](https://img.shields.io/github/license/Ed-XCF/airflow-provider-aliyun-rocketmq)
-[![Build Status](https://app.travis-ci.com/Ed-XCF/airflow-provider-aliyun-rocketmq.svg?branch=main)](https://app.travis-ci.com/Ed-XCF/airflow-provider-aliyun-rocketmq)
-[![codecov](https://codecov.io/gh/Ed-XCF/airflow-provider-aliyun-rocketmq/branch/main/graph/badge.svg?token=RCI7A0MBOO)](https://codecov.io/gh/Ed-XCF/airflow-provider-aliyun-rocketmq)
-![PyPI](https://img.shields.io/pypi/v/airflow-provider-aliyun-rocketmq)
+![GitHub](https://img.shields.io/github/license/Ed-XCF/apache-airflow-provider-aliyun-rocketmq)
+[![Build Status](https://app.travis-ci.com/Ed-XCF/apache-airflow-provider-aliyun-rocketmq.svg?branch=main)](https://app.travis-ci.com/Ed-XCF/apache-airflow-provider-aliyun-rocketmq)
+[![codecov](https://codecov.io/gh/Ed-XCF/apache-airflow-provider-aliyun-rocketmq/branch/main/graph/badge.svg?token=RCI7A0MBOO)](https://codecov.io/gh/Ed-XCF/apache-airflow-provider-aliyun-rocketmq)
+![PyPI](https://img.shields.io/pypi/v/apache-airflow-provider-aliyun-rocketmq)
 
 ## 🧪 Experimental Version
 This provider is an experimental alpha containing necessary components to publish data to aliyun rocketmq.

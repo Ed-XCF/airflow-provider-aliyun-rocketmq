@@ -1,6 +1,6 @@
 [run]
 branch = True
-source = aliyun_rocketmq_provider
+source = aliyun-rocketmq
 
 [report]
 exclude_lines =

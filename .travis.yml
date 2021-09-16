@@ -6,7 +6,7 @@ python:
 branches:
   only:
     - main
-services: airflow-provider-aliyun-rocketmq
+services: aliyun-rocketmq
 cache: pip
 before_install:
   - sudo add-apt-repository -y ppa:travis-ci/sqlite3
