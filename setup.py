@@ -24,5 +24,5 @@ setup(
     author='Ed__xu__Ed',
     author_email='m.tofu@qq.com',
     url='https://github.com/Ed-XCF/apache-airflow-providers-aliyun-rocketmq',
-    python_requires='~=3.7',
+    python_requires='>=3.6',
 )
