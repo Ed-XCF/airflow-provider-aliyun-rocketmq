@@ -1,4 +1,3 @@
-import json
 from typing import Dict
 
 from mq_http_sdk.mq_client import MQClient, MQProducer
@@ -46,11 +45,16 @@ class AliyunRocketMQHook(BaseHook):
         client = MQClient(conn.host, conn.login, conn.password)
         return client.get_producer(conn.schema, self.topic)
 
-    def run(self, data: Dict, tag: str = None, fail_silently: bool = False) -> TopicMessage:
+    def run(
+        self,
+        message_body: str,
+        message_tag: str = None,
+        fail_silently: bool = False
+    ) -> TopicMessage:
         """Publish the data."""
         try:
             conn = self.get_conn()
-            message = TopicMessage(json.dumps(data), (tag or "").lower())
+            message = TopicMessage(message_body, (message_tag or "").lower())
             return conn.publish_message(message)
         except Exception as e:
             if not fail_silently:

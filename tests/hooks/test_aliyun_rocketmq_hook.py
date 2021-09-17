@@ -21,5 +21,5 @@ class TestAliyunRocketMQHook:
     def test_publish(self):
         hook = AliyunRocketMQHook(topic="test_topic")
         with mock.patch.object(MQClient, "publish_message"):
-            response = hook.run({})
+            response = hook.run("")
             assert response.message_id == ""
