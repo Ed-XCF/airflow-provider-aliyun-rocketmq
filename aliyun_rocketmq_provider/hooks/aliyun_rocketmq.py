@@ -20,9 +20,9 @@ class AliyunRocketMQHook(BaseHook):
         return {
             "hidden_fields": ['port', 'extra'],
             "relabeling": {
-                'login': 'RocketMQ Access ID',
-                'password': 'RocketMQ Access Key',
-                'schema': 'RocketMQ Instance ID'
+                'login': 'Access ID',
+                'password': 'Access Key',
+                'schema': 'Instance ID'
             },
             "placeholders": {
                 'login': 'access id',
