@@ -7,7 +7,7 @@ with open("version", "r") as fh:
     version = fh.read()
 
 setup(
-    name='apache-airflow-providers-aliyun-rocketmq',
+    name='airflow-providers-aliyun-rocketmq',
     version=version,
     description='Airflow x Aliyun RocketMQ',
     long_description=long_description,
@@ -23,6 +23,6 @@ setup(
     setup_requires=['setuptools', 'wheel'],
     author='Ed__xu__Ed',
     author_email='m.tofu@qq.com',
-    url='https://github.com/Ed-XCF/apache-airflow-providers-aliyun-rocketmq',
+    url='https://github.com/Ed-XCF/airflow-providers-aliyun-rocketmq',
     python_requires='>=3.6',
 )
