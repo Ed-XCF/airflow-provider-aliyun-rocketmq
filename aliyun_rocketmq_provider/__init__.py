@@ -4,5 +4,5 @@ def get_provider_info():
         "name": "Aliyun RocketMQ Airflow Provider",
         "description": "Airflow provider for aliyun rocketmq",
         "hook-class-names": ["aliyun_rocketmq_provider.hooks.aliyun_rocketmq.AliyunRocketMQHook"],
-        "versions": ["0.0.10"]
+        "versions": ["0.1.0"]
     }
