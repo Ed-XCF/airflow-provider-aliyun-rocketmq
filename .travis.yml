@@ -7,11 +7,10 @@ python:
 branches:
   only:
     - main
-services: aliyun-rocketmq-provider
+services: mysql
+env:
+  - AIRFLOW__CORE__SQL_ALCHEMY_CONN=mysql://root:@127.0.0.1/airflow
 cache: pip
-before_install:
-  - sudo apt-get -y update
-  - sudo apt-get -y install sqlite3
 install: make dev
 script: make test
 after_success:

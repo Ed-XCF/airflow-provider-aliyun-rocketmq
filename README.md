@@ -14,5 +14,10 @@
 [![codecov](https://codecov.io/gh/Ed-XCF/airflow-provider-aliyun-rocketmq/branch/main/graph/badge.svg?token=RCI7A0MBOO)](https://codecov.io/gh/Ed-XCF/airflow-provider-aliyun-rocketmq)
 ![PyPI](https://img.shields.io/pypi/v/airflow-providers-aliyun-rocketmq)
 
-## 🧪 Experimental Version
-This provider is an experimental alpha containing necessary components to publish data to aliyun rocketmq.
+Example
+```python
+from aliyun_rocketmq_provider.hooks.aliyun_rocketmq import AliyunRocketMQHook
+
+message_push_topic = AliyunRocketMQHook(topic="message-push")
+message_push_topic.run("helloWorld", fail_silently=True)
+```
