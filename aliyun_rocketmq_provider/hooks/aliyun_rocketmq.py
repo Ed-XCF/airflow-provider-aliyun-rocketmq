@@ -49,13 +49,28 @@ class AliyunRocketMQHook(BaseHook):
         self,
         message_body: str,
         message_tag: str = None,
+        message_key: str = None,
+        trans_check_immunity_time: int = None,
+        start_deliver_time: int = None,
+        sharding_key: str = None,
         fail_silently: bool = False
     ) -> TopicMessage:
         """Publish the data."""
+        message = TopicMessage(message_body)
+
+        if message_tag is not None:
+            message.set_message_tag(message_tag.lower())
+        if message_key is not None:
+            message.set_message_key(message_key)
+        if trans_check_immunity_time is not None:
+            message.set_trans_check_immunity_time(trans_check_immunity_time)
+        if start_deliver_time is not None:
+            message.set_start_deliver_time(start_deliver_time)
+        if sharding_key is not None:
+            message.set_sharding_key(sharding_key)
+
         try:
-            conn = self.get_conn()
-            message = TopicMessage(message_body, (message_tag or "").lower())
-            return conn.publish_message(message)
+            return self.get_conn().publish_message(message)
         except Exception as e:
             if not fail_silently:
                 raise
